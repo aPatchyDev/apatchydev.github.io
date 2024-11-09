@@ -1,4 +1,9 @@
 {
     "name": "Jekyll",
-    "image": "mcr.microsoft.com/devcontainers/jekyll"
+    "image": "mcr.microsoft.com/devcontainers/jekyll",
+    "customizations": {
+        "vscode": {
+            "extensions": ["vivaxy.vscode-conventional-commits"]
+        }
+    }
 }
