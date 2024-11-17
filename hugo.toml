@@ -1,0 +1,24 @@
+baseURL = 'https://apatchydev.github.io/'
+languageCode = 'kr-ko'
+defaultContentLanguage = 'kr'
+[module]
+  [[module.imports]]
+    path = 'github.com/McShelby/hugo-theme-relearn'
+[languages]
+  [languages.kr]
+    languageCode = 'kr'
+    languageName = '한국어'
+    title = 'aPatchyDev의 개발블로그'
+    weight = 1
+  [languages.en]
+    languageCode = 'en'
+    languageName = 'English'
+    title = '''aPatchyDev's DevBlog'''
+    weight = 2
+[params]
+  showVisitedLinks = false
+  themeVariant = 'zen-dark'
+  collapsibleMenu = true
+  alwaysopen = false
+  disableLandingPageButton = true
+  disableExplicitIndexURLs = true
