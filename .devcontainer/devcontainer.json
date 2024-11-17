@@ -1,0 +1,14 @@
+{
+    "name": "Hugo",
+    "image": "mcr.microsoft.com/devcontainers/go",
+    "features": {
+        "ghcr.io/devcontainers/features/hugo:1": {
+            "extended": true
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": ["vivaxy.vscode-conventional-commits"]
+        }
+    }
+}
