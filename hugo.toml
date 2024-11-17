@@ -22,3 +22,4 @@ defaultContentLanguage = 'kr'
   alwaysopen = false
   disableLandingPageButton = true
   disableExplicitIndexURLs = true
+  ordersectionsby = 'weighted-old'
