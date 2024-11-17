@@ -1,5 +1,8 @@
 {
     "conventionalCommits.scopes": [
         "blog"
-    ]
+    ],
+    "[markdown]": {
+        "editor.quickSuggestions": true
+    }
 }
