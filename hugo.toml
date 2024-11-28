@@ -23,3 +23,5 @@ defaultContentLanguage = 'kr'
   disableLandingPageButton = true
   disableExplicitIndexURLs = true
   ordersectionsby = 'weighted-old'
+  disableInlineCopyToClipBoard = true
+  highlightWrap = false

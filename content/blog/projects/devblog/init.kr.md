@@ -1,12 +1,11 @@
 +++
 date = '2024-11-17T14:51:14Z'
-title = '초기설정'
+linkTitle = '초기설정'
+title = '개발블로그 시작과정'
 weight = 100
 +++
 
-## 개발블로그 시작과정
-
-### 테마 희망사항
+## 테마 희망사항
 
 - 웹사이트를 탐색하기에 용이한 사이드바
 - 페이지를 카테고리로 분류하고
@@ -14,7 +13,7 @@ weight = 100
 
 무조건 최신순이 아니라 직접 페이지를 정리하고 싶었기 때문에 blog 테마보다는 documentation 테마가 더 마음에 들었다.
 
-### 1트: Jekyll Gitbook
+## 1트: Jekyll Gitbook
 
 처음에는 깃헙과 연동이 잘 되어있는 jekyll을 사용하려고 했다.
 
@@ -47,7 +46,7 @@ weight = 100
 
 원래의 gitbook은 지원하는 것으로 보이지만 jekyll port는 안 됐기 때문에 다른 대안을 찾기 시작했다.
 
-### 2트: 다른 Jekyll 테마 탐색
+## 2트: 다른 Jekyll 테마 탐색
 
 Read the Docs 테마도 좋아 보여 jekyll 테마를 찾아보았지만 몇 가지 이유로 선택하지 않았다.
 
@@ -64,7 +63,7 @@ Read the Docs 테마도 좋아 보여 jekyll 테마를 찾아보았지만 몇 �
 
 단지 얼마나 사용하기 편한지 뿐.
 
-### 3트: Hugo Relearn
+## 3트: Hugo Relearn
 
 다른 SSG 테마들을 보던 중 [Hugo Themes](https://themes.gohugo.io/tags/docs/)를 보게 됐다.
 
