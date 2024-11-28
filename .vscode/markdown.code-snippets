@@ -17,7 +17,17 @@
 	// }
 	"Notice": {
 		"prefix": "notice",
-		"body": ["{{% notice style=${1:info} title=${2:text} %}}", "$3", "{{% /notice %}}"],
+		"body": ["{{% notice style=\"${1:info}\" title=\"${2:text}\" %}}", "$3", "{{% /notice %}}"],
 		"description": "Notice block for emphasis"
-	}
+	},
+	"Tab": {
+		"prefix": "tab",
+		"body": ["{{% tab title=\"${1:title}\" %}}", "$2", "{{% /tab %}}"],
+		"description": "Tab block"
+	},
+	"Tabs": {
+		"prefix": "tabs",
+		"body": ["{{< tabs ${1:title=\"Tab Title\"} >}}", "$2", "{{< /tabs >}}"],
+		"description": "Tab block"
+	},
 }
