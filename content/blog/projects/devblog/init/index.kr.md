@@ -1,6 +1,6 @@
 +++
 date = '2024-11-17T14:51:14Z'
-linkTitle = '초기설정'
+linktitle = '초기설정'
 title = '개발블로그 시작과정'
 weight = 100
 +++
