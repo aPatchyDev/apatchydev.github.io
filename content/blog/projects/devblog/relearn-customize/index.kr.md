@@ -57,3 +57,61 @@ weight = 100
 
 예: `hugo mod get -u github.com/McShelby/hugo-theme-relearn@7.1.1`
 {{% /notice %}}
+
+## Word wrapping
+
+### 본문에서의 단어 단위 word wrap
+
+기본 설정에서는 한글 본문은 글자단위로 word wrap이 이루어진다. 이걸 단어 단위로 변경하려면 아래의 CSS를 추가해줘야 한다.
+
+{{% tab title='layouts/partials/custom-header.html' %}}
+```css
+<style>
+    div {
+        word-break: keep-all;
+    }
+</style>
+```
+{{% /tab %}}
+
+### 코드 블록에서의 word wrap 해제하기
+
+기본 설정에서는 코드 블록에서 word wrap이 활성화되어 있다. 줄 번호가 꺼져있는 경우(=기본설정)에는 코드를 잘못 이해할 수도 있다.
+
+설정은 `hugo.toml`에서 꺼주면 된다.
+
+{{% tab title='hugo.toml' %}}
+```toml
+[params]
+  highlightWrap = false
+```
+{{% /tab %}}
+
+## 본문 폭 변경하기
+
+글 본문은 기본으로 최대 폭을 제한하고 있어 큰 모니터에서는 양 옆에 공간이 남는다. 이를 변경하려면 CSS를 추가하면 된다.  
+[참고자료](https://mcshelby.github.io/hugo-theme-relearn/configuration/content/width/index.html)
+
+{{% tab title='layouts/partials/custom-header.html' %}}
+```css
+<style>
+    :root {
+        --MAIN-WIDTH-MAX: 85rem;
+    }
+</style>
+```
+{{% /tab %}}
+
+## h2 글꼴 변경하기
+
+Relearn 테마에서 페이지의 제목은 h1과 같은 글꼴을 공유한다. 가운데 정렬이라 글의 흐름을 깨기 때문에 글 본문에서는 h2부터 쓰는데 h3 이하랑 크기만 달라 구분이 잘 안 되는 것이 불만이었다. 그래서 밑줄을 추가했다.
+
+{{% tab title='layouts/partials/custom-header.html' %}}
+```css
+<style>
+    h2 {
+        text-decoration: underline;
+    }
+</style>
+```
+{{% /tab %}}
