@@ -213,7 +213,7 @@ tickInterval 1second
     mov rax, BYTE PTR [rbp-0x20+rax]: b, 02, 05
 ```
 
-`bitarray`가 조금 빠를 것으로 보인다.
+`Bitarray`가 조금 빠를 것으로 보인다.
 
 덤으로 조건문을 걸게 되면 `bitarray`는 `and` 명령어의 결과를 바탕으로 `jz / jnz` 명령어를 바로 쓸 수 있지만 `배열`은 `test eax, eax`로 비트의 값을 먼저 확인해야 한다.  
 하지만 컴파일러가 -O2 플래그로 컴파일해도 `test` 명령어를 항상 삽입하기 때문에 손수 어셈블리 최적화를 할 게 아니라면 의미 없다.
@@ -238,7 +238,7 @@ tickInterval 1second
     mov BYTE PTR [rbp-0x20+rax], 1: b, 02, 04
 ```
 
-`bitarray`보다 `배열`이 조금 더 빠를 것으로 보인다.
+`Bitarray`보다 `배열`이 조금 더 빠를 것으로 보인다.
 {{% /tab %}}
 
 {{% tab title="clear bit" %}}
@@ -261,7 +261,7 @@ tickInterval 1second
     mov BYTE PTR [rbp-0x20+rax], 0: b, 02, 04
 ```
 
-`bitarray`보다 `배열`이 더 빠를 것으로 보인다.
+`Bitarray`보다 `배열`이 더 빠를 것으로 보인다.
 {{% /tab %}}
 
 {{% tab title="toggle bit" %}}
@@ -297,15 +297,203 @@ tickInterval 1second
 {{% /tab %}}
 {{< /tabs >}}
 
-종합해보면 초기화 외에느 비슷하거나 `bitarray`가 더 느릴 것으로 보인다. C++에서는 `std::bitset / std::vector<bool>`가 있어 코드 작성에 큰 차이는 없겠지만 Python에서는 직접 비트 연산을 해줘야 하기 때문에 메모리 외에는 장점이 딱히 없다. 메모리 여유가 있다면 그냥 배열을 쓰는 것이 좋아보인다.
+종합해보면 초기화 외에느 비슷하거나 `bitarray`가 더 느릴 것으로 보인다. C++에서는 `std::bitset / std::vector<bool>`가 있어 코드 작성에 큰 차이는 없겠지만 Python에서는 직접 비트 연산을 해줘야 하기 때문에 메모리 외에는 코드 작성도 더 번거롭다. 메모리 여유가 있다면 그냥 배열을 쓰는 것이 좋아보인다.
 
-예시로 [백준 7667](https://www.acmicpc.net/problem/7662)에서 [이 솔루션](https://www.acmicpc.net/source/88983944)을 bitarray로 변경하면 시간초과가 난다.
+예시로 [백준 7667](https://www.acmicpc.net/problem/7662)에서 아래 솔루션을 bitarray로 변경하면 시간초과가 난다.
+
+{{% notice expanded=false title="백준 7667 Boolean[] 솔루션" %}}
+```python3
+#!/usr/bin/python3
+
+import sys
+def read():
+    return sys.stdin.readline().rstrip()
+
+def readInt():
+    return int(sys.stdin.readline())
+
+import heapq
+
+for _ in range(readInt()):
+    minh = []
+    maxh = []
+    rm = [True] * 1_000_001
+    cnt = 0
+    for _ in range(readInt()):
+        op, val = read().split()
+        if op == "I":
+            k = int(val)
+            heapq.heappush(minh, (k, cnt))
+            heapq.heappush(maxh, (-k, cnt))
+            cnt += 1
+        elif val == "1":
+            while len(maxh) > 0:
+                _, c = heapq.heappop(maxh)
+                if rm[c]:
+                    rm[c] = False
+                    break
+        else:
+            while len(minh) > 0:
+                _, c = heapq.heappop(minh)
+                if rm[c]:
+                    rm[c] = False
+                    break
+
+    while len(maxh) > 0:
+        big, c = heapq.heappop(maxh)
+        if rm[c]:
+            break
+    else:
+        print("EMPTY")
+        continue
+
+    while len(minh) > 0:
+        small, c = heapq.heappop(minh)
+        if rm[c]:
+            break
+    else:
+        print("EMPTY")
+        continue
+
+    print(-big, small)
+```
+{{% /notice %}}
+
+{{% notice expanded=false title="백준 7667 Bitarray 솔루션" %}}
+```python3
+#!/usr/bin/python3
+
+import sys
+def read():
+    return sys.stdin.readline().rstrip()
+
+def readInt():
+    return int(sys.stdin.readline())
+
+import heapq
+
+for _ in range(readInt()):
+    minh = []
+    maxh = []
+    rm = 0
+    cnt = 0
+    for _ in range(readInt()):
+        op, val = read().split()
+        if op == "I":
+            k = int(val)
+            heapq.heappush(minh, (k, cnt))
+            heapq.heappush(maxh, (-k, cnt))
+            cnt += 1
+        elif val == "1":
+            while len(maxh) > 0:
+                _, c = heapq.heappop(maxh)
+                if rm & (1 << c) == 0:
+                    rm |= (1 << c)
+                    break
+        else:
+            while len(minh) > 0:
+                _, c = heapq.heappop(minh)
+                if rm & (1 << c) == 0:
+                    rm |= (1 << c)
+                    break
+
+    while len(maxh) > 0:
+        big, c = heapq.heappop(maxh)
+        if rm & (1 << c) == 0:
+            break
+    else:
+        print("EMPTY")
+        continue
+
+    while len(minh) > 0:
+        small, c = heapq.heappop(minh)
+        if rm & (1 << c) == 0:
+            break
+    else:
+        print("EMPTY")
+        continue
+
+    print(-big, small)
+```
+{{% /notice %}}
+
+그러나 백트래킹 문제에서 탐색 기록을 저장하는 등의 복사가 많은 경우에는 bitarray가 더 빠르다. boolean 배열은 원소당 최소 1바이트를 쓰지만 bitarray는 8bit마다 1바이트를 사용하기 때문에 최소 8배 더 빨리 복사할 수 있다.
+
+예시로 [백준 1987](https://www.acmicpc.net/problem/1987)에서 재귀 없이 동일한 풀이로 `Bitarray vs Boolean[]` 실행결과를 비교하면 다음과 같다.
+
+{{% notice expanded=false title="백준 1987 Bitarray 솔루션" %}}
+```python3
+#!/usr/bin/python3
+
+import sys
+def read():
+    return sys.stdin.readline().rstrip()
+
+def readInts():
+    return map(int, sys.stdin.readline().split())
+
+r, c = readInts()
+grid = [[ord(c) - 65 for c in read()] for _ in range(r)]
+masks = [1 << i for i in range(26)]
+
+offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+stk = [(0, 0, masks[grid[0][0]], 1)]
+res = 1
+while len(stk) != 0:
+    x, y, visited, cnt = stk.pop()
+    res = max(res, cnt)
+    for ox, oy in offsets:
+        i, j = x + ox, y + oy
+        if 0 <= i < r and 0 <= j < c and (visited & masks[grid[i][j]]) == 0:
+            stk.append((i, j, visited | masks[grid[i][j]], cnt + 1))
+
+print(res)
+```
+{{% /notice %}}
+
+{{% notice expanded=false title="백준 1987 Boolean[] 솔루션" %}}
+```python3
+#!/usr/bin/python3
+
+import sys
+def read():
+    return sys.stdin.readline().rstrip()
+
+def readInts():
+    return map(int, sys.stdin.readline().split())
+
+r, c = readInts()
+grid = [[ord(c) - 65 for c in read()] for _ in range(r)]
+
+offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+visited = [False] * 26
+visited[grid[0][0]] = True
+stk = [(0, 0, visited, 1)]
+res = 1
+while len(stk) != 0:
+    x, y, visited, cnt = stk.pop()
+    res = max(res, cnt)
+    for ox, oy in offsets:
+        i, j = x + ox, y + oy
+        if 0 <= i < r and 0 <= j < c and not visited[grid[i][j]]:
+            cpy = visited.copy()
+            cpy[grid[i][j]] = True
+            stk.append((i, j, cpy, cnt + 1))
+
+print(res)
+```
+{{% /notice %}}
+
+| 풀이 | 실행시간 (ms) | 메모리 (KB) |
+| --- | --- | --- |
+| Bitarray | 2,900 | 111,276 |
+| Boolean[] | 3,932 | 115,380 |
 
 ### 64비트 초과
 
 `배열`은 코드가 달라지지 않지만 `bitarray`는 64비트를 넘어가면 바이트 배열로 나누어야 하므로 `배열`이 하는 주소 연산에 추가로 비트 연산까지 해야 하므로 실행속도는 `배열`이 더 빠르다.
 
-`bitarray get bit / set bit / clear bit / toggle bit`는 첫 2줄을 아래와 같이 변경하면 임의의 길이에도 사용할 수 있다.
+`Bitarray get bit / set bit / clear bit / toggle bit`는 첫 2줄을 아래와 같이 변경하면 임의의 길이에도 사용할 수 있다.
 
 ```nasm
 ; Assume $rbp-0x18 is n (position of bit)
