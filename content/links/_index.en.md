@@ -7,6 +7,10 @@ weight = '3'
 
 https://github.com/aPatchyDev
 
+## Solved.ac
+
+https://solved.ac/profile/jhh20
+
 ## DreamHack
 
 https://dreamhack.io/users/23452

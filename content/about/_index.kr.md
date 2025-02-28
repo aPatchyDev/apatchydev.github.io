@@ -33,13 +33,19 @@ weight = 1
 
 ## 대외 활동
 - 2022/07 ~ 2022/10 OpenUp 오픈소스 컨트리뷰션 아카데미 uftrace 팀 참가
+    - [기능 구현] 테스트케이스 순차적 실행 옵션 추가 [1510](https://github.com/namhyung/uftrace/pull/1510)
+    - [오류 분석] 테스트케이스 랜덤 실패 [1063](https://github.com/namhyung/uftrace/issues/1063#issuecomment-1206474208), [1509](https://github.com/namhyung/uftrace/issues/1509)
+    - [문서화] 영어 문서 개선 [1475](https://github.com/namhyung/uftrace/pull/1475)
+    - [패치 방향 논의] 메모리 누수 해결방법 [1428](https://github.com/namhyung/uftrace/issues/1428#issuecomment-1189219254)
+    - [코드 클린업] C 코드 중복된 `#include` 제거 [1481](https://github.com/namhyung/uftrace/pull/1481), [1484](https://github.com/namhyung/uftrace/pull/1484)
+    - [미완성] 테스트 반복시 이전 데이터 유지 [1517](https://github.com/namhyung/uftrace/pull/1517), [1520](https://github.com/namhyung/uftrace/pull/1520)
 
 ## 동아리 활동
 - 2021/04 ~ 2022/10 연세대학교 보안 동아리 YSC 활동
     - 2021/08 ~ 2021/12 운영진으로 활동
     - 2022/01 ~ 2022/10 회장으로 활동
     - PwnCollege, 드림핵 문제풀이
-    - CTF 온라인 대회 다수 참가
+    - CTF 온라인 대회 다수 참가: [Write-Up](https://github.com/y0ns3c/CTF-Writeups)
     - 바이너리 분석 및 공격기법 관련 정기 세미나 진행
 - 2021/03 ~ 연세대학교 프로그래밍 동아리 PoolC 활동
     - 세미나 다수 참여
