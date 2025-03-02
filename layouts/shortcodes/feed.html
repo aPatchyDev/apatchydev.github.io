@@ -1,0 +1,101 @@
+{{/*
+    $src: Root page of feed
+    $tocprefix: Text to prepend in each feed entry's ToC
+    $color: CSS color value for styling feed entry title
+    $maxcnt: Max number of feed entry
+*/}}
+{{ $src := .Get "source" | default "." | .Page.GetPage }}
+{{ $tocprefix := .Get "tocprefix" | default "" }}
+{{ $color := .Get "color" | default "" }}
+{{ $maxcnt:= .Get "limit" | default 0 | int }}
+
+{{/*
+Perform BFS with high max depth since while loop cannot be used
+    $posts: Queue for holding leaf pages
+    $pages: Queue for holding intermediate pages
+*/}}
+{{ $posts := slice }}
+{{ $pages := slice $src }}
+{{ range seq 999 }}
+    {{ $nxt := slice }}
+    {{ range $pages }}
+        {{ if eq (len .Pages) 0 }}
+            {{ $posts = $posts | append . }}
+        {{ else }}
+            {{ $nxt = $nxt | append .Pages }}
+        {{ end }}
+    {{ end }}
+
+    {{ if eq (len $nxt) 0 }}
+        {{ break }}
+    {{ else }}
+        {{ $pages = $nxt }}
+    {{ end }}
+{{ end }}
+
+{{/*
+Sort by last modified date and apply limit if necessary
+    $truncated may be negative if entry count is less than a positive $maxcnt
+        Check for truncation by using greater-than rather than equals
+*/}}
+{{ $posts = sort $posts "Lastmod" "desc" }}
+{{ $truncated := 0 }}
+{{ if gt $maxcnt 0 }}
+    {{ $truncated = sub (len $posts) $maxcnt }}
+    {{ $posts = $posts | first $maxcnt }}
+{{ end }}
+
+{{/*
+Generate feed
+*/}}
+<div style="display: grid; grid-gap: 1lh 2em; grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));">
+{{ $boxstyle := "pointer-events: unset; position: relative; margin: 0; display: flex; flex-direction: column;" }}
+{{ range $posts }}
+    {{/*
+    Get relative path to $src
+    */}}
+    {{ $parents := slice }}
+    {{ range .Ancestors }}
+        {{ if eq . $src}}
+            {{ break }}
+        {{ end }}
+        {{ $parents = $parents | append .Title }}
+    {{ end }}
+    {{ $parents = delimit ($parents | collections.Reverse) "/" }}
+
+    {{/*
+    Generate preview entry
+    */}}
+    {{ if eq $color "" }}
+        {{ (printf `<div class="box cstyle default" style="%s">` $boxstyle) | safeHTML }}
+    {{ else }}
+        {{ (printf `<div class="box cstyle" style="%s --VARIABLE-BOX-color: %s;">` $boxstyle $color) | safeHTML }}
+    {{ end }}
+        <div class="box-label">
+            [{{ $parents }}] {{ .Title }}
+        </div>
+        <div class="box-content" style="flex: 1;">
+            {{ if ne $tocprefix "" }}
+                <p>{{$tocprefix}}</p>
+            {{ end }}
+            {{ .TableOfContents | strings.ReplaceRE "</?a.*?>" "" | safeHTML }}
+        </div>
+        <a href="{{ .RelPermalink }}">
+            <span style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1;"></span>
+        </a>
+    </div>
+{{ end }}
+
+{{ if gt $truncated 0 }}
+    {{/*
+    Display truncation info if applicable
+    */}}
+    {{ if eq $color "" }}
+        {{ (printf `<div class="box cstyle default" style="%s">` $boxstyle) | safeHTML }}
+    {{ else }}
+        {{ (printf `<div class="box cstyle" style="%s --VARIABLE-BOX-color: %s;">` $boxstyle $color) | safeHTML }}
+    {{ end }}
+        <h1 style="height: 100%; text-align: center; align-content: center;">+ {{ $truncated }}</h1>
+    </div>
+{{ end }}
+</div>
