@@ -16,6 +16,7 @@ enableGitInfo = true
     languageName = 'English'
     title = '''aPatchyDev's DevBlog'''
     weight = 2
+    disabled = true
 [params]
   showVisitedLinks = false
   themeVariant = 'zen-dark'
