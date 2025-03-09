@@ -11,11 +11,11 @@ enableGitInfo = true
     languageName = '한국어'
     title = 'aPatchyDev의 개발블로그'
     weight = 1
-  [languages.en]
-    languageCode = 'en'
-    languageName = 'English'
-    title = '''aPatchyDev's DevBlog'''
-    weight = 2
+#  [languages.en]
+#    languageCode = 'en'
+#    languageName = 'English'
+#    title = '''aPatchyDev's DevBlog'''
+#    weight = 2
 [params]
   showVisitedLinks = false
   themeVariant = 'zen-dark'
