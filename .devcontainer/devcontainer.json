@@ -3,7 +3,8 @@
     "image": "mcr.microsoft.com/devcontainers/go",
     "features": {
         "ghcr.io/devcontainers/features/hugo:1": {
-            "extended": true
+            "extended": true,
+            "version": "0.145.0"
         }
     },
     "customizations": {
