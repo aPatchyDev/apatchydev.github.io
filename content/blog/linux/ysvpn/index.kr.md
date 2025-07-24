@@ -139,7 +139,7 @@ VPN이 실행되지 않는 상태에서는 `사용자 경로`에는 로고 이�
 
 그러나 `설치 경로 / 사용자 경로` 모두 `.ovpn` 파일은 찾을 수 없었다. 파일을 생성했다가 삭제하는지, 레지스트리에 저장하는지 알 수 없었기에 동적으로 분석해보기로 했다. [MS ProcessMonitor](https://learn.microsoft.com/en-us/sysinternals/downloads/procmon)를 사용하면 원하는 프로세스가 수행하는 파일 입출력, 레지스트리 접근을 포함해 다양한 리소스 사용 패턴을 알 수 있다.
 
-`ProcessMonitor`로 `SecuwayVPN` 프로세스를 감시하니 `사용자 경루\config\` 폴더에 임시 파일을 생성하는 것을 볼 수 있었다. 그러나 실제로 해당 경로에 가보면 아무 흔적도 없었다. 가장 처음 시도한 것은 데이터 복구 프로그램을 사용해보는 것이었다.
+`ProcessMonitor`로 `SecuwayVPN` 프로세스를 감시하니 `사용자 경로\config\` 폴더에 임시 파일을 생성하는 것을 볼 수 있었다. 그러나 실제로 해당 경로에 가보면 아무 흔적도 없었다. 가장 처음 시도한 것은 데이터 복구 프로그램을 사용해보는 것이었다.
 
 - [EaseUS Data Recovery](https://www.easeus.com/datarecoverywizard/free-data-recovery-software.htm): 파일 흔적은 찾았지만 파일 데이터가 소실된 부분이 많아 복구가 안 됐다
 - [Recuva](https://www.ccleaner.com/recuva): 좀 더 잘 복구가 됐으나 정말 완벽하게 복구된 것인지는 알 수 없었다
