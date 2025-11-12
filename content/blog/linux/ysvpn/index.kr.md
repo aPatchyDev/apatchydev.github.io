@@ -13,7 +13,7 @@ YSVPN은 연세대학교에서 사용하는 VPN 프로그램으로 외부에서 
 
 ## 해결책
 
-1. 카이스트 전산학부에서 [리눅스용 SecuwaySSL U V2.*](https://kcloud.kaist.ac.kr/index.php/pds/?mod=document&uid=225)을 다운받는다.
+1. 카이스트 전산학부에서 [리눅스용 SecuwaySSL U V2.*](https://kcloud.kaist.ac.kr/index.php/pds/?mod=document&uid=224)을 다운받는다.
 2. `SSU20-CFL-V2.*.tgz` 압축파일을 해제한다. 이 압축파일의 내용물만 필요하므로 다른 파일들은 삭제해도 된다.
 3. `conf/client.info`를 다음과 같이 수정한다.
 
